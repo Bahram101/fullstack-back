@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
 import config from "config";
+import cors from "cors";
 import { register, login, getMe } from "./controllers/UserController.js";
 import {
   create,
@@ -20,6 +21,7 @@ const PORT = config.get("serverPort");
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 const storage = multer.diskStorage({
