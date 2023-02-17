@@ -72,7 +72,7 @@ export const update = async (req, res) => {
       { _id: postId },
       { title, text, tags, imageUrl, user: req.userId }
     );
-    res.json({message: "Успешно обнгавлена"});
+    res.json({ message: "Успешно обнгавлена" });
   } catch (err) {
     res.status(500).json({
       message: "Не удалось изменить статью",
@@ -95,6 +95,21 @@ export const remove = (req, res) => {
   } catch (err) {
     res.status(500).json({
       message: "Не удалось удалить статью",
+    });
+  }
+};
+
+export const getLastTags = async (req, res) => {
+  try {
+    const posts = await Post.find().limit(3).exec();
+    const tags = posts
+      .map((obj) => obj.tags)
+      .flat()
+      .slice(0, 5);
+    return res.json(tags);
+  } catch (err) {
+    res.status(500).json({
+      message: "Не удалось получить теги",
     });
   }
 };

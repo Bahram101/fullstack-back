@@ -10,6 +10,7 @@ import {
   getOne,
   remove,
   update,
+  getLastTags,
 } from "./controllers/PostController.js";
 import {
   registerValidation,
@@ -38,7 +39,7 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
 });
 
 app.post("/register", registerValidation, handleValidationError, register);
-app.post("/login", loginValidation, login);
+app.post("/login", loginValidation, handleValidationError, login);
 app.get("/getMe", checkAuth, getMe);
 
 app.get("/posts", getAll);
@@ -46,6 +47,8 @@ app.get("/posts/:id", getOne);
 app.post("/posts", checkAuth, postValidation, create);
 app.patch("/posts/:id", checkAuth, postValidation, update);
 app.delete("/posts/:id", checkAuth, remove);
+
+app.get("/tags", getLastTags);
 
 const start = async () => {
   try {
